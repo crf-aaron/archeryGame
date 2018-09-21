@@ -18,6 +18,9 @@ function Balloon(config) {
         this.explosions.forEach(function(explosion) {
             explosion.animations.add(config.explodePic);
         }, this);
+        // 红牛罐
+        this.pots = game.add.group();
+        this.pots.createMultiple(1, 'pot');
     }
     // 产生气球
     this.generateBalloon = function () {
@@ -31,24 +34,45 @@ function Balloon(config) {
     this.hitBalloon = function(arrow, balloon) {
         arrow.kill();
         balloon.kill();
+        // 从对象池中取爆炸物
         var explosion = this.explosions.getFirstExists(false);
-        explosion.reset(balloon.body.x-56, balloon.body.y-124);
+        explosion.reset(balloon.body.x - 90, balloon.body.y - 120);
         explosion.play(config.explodePic, 10, false, true);
+        // 击中总个数
         numTotal = 21 - game.num.frame--;
+
         if(balloon.key == 'balloon01') {
             num1++;
             score += config.score;
+            // 从对象池中取红牛罐
+            this.pot = this.pots.getFirstExists(false);
+            this.pot.reset(balloon.body.x + 20, balloon.body.y + 140);
+            this.tween = game.add.tween(this.pot).to({y: game.height - 300}, 500, Phaser.Easing.Linear.None, true);
+            this.tween.onComplete.add(this.killPot, this);
         } else if(balloon.key == 'balloon02') {
             num2++;
             score += config.score;
+            // 从对象池中取红牛罐
+            this.pot = this.pots.getFirstExists(false);
+            this.pot.reset(balloon.body.x + 20, balloon.body.y + 140);
+            this.tween = game.add.tween(this.pot).to({y: game.height - 300}, 500, Phaser.Easing.Linear.None, true);
+            this.tween.onComplete.add(this.killPot, this);
         } else if(balloon.key == 'balloon05') {
             num5++;
             score += config.score;
+            // 从对象池中取红牛罐
+            this.pot = this.pots.getFirstExists(false);
+            this.pot.reset(balloon.body.x + 20, balloon.body.y + 140);
+            this.tween = game.add.tween(this.pot).to({y: game.height - 300}, 500, Phaser.Easing.Linear.None, true);
+            this.tween.onComplete.add(this.killPot, this);
         } else {
             num0++;
             score = 0;
         }
     };
+    this.killPot = function () {
+        this.pot.kill();
+    }
 }
 var score = 0;// 分数
 var numTotal = 0;// 击中总个数
