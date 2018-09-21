@@ -252,8 +252,10 @@ game.States.main = function () {
             game.time.events.remove(this.balloon05.timerBalloon);
             game.time.events.remove(this.balloon00.timerBalloon);
             // 移除箭的动画
-            this.arrowScaleTween.pause();
-            this.arrowTween.pause();
+            if(this.arrowScaleTween) {
+                this.arrowScaleTween.pause();
+                this.arrowTween.pause();
+            }
             // 禁止气球下落
             this.balloon01.balloons.forEach(function (ballon) {
                 ballon.body.velocity.y = 0;
