@@ -251,7 +251,7 @@ game.States.main = function () {
             this.cross.body.velocity.set(0);
             return;
         }
-        var maxSpeed = 600;// 瞄准器移动速度
+        var maxSpeed = 700;// 瞄准器移动速度
         if (this.stick.isDown) {
             this.physics.arcade.velocityFromRotation(this.stick.rotation, this.stick.force * maxSpeed, this.cross.body.velocity);
             // this.arrow.rotation = this.stick.rotation;
